@@ -1,0 +1,20 @@
+##
+# .rubocop.yml
+
+require:
+  - rubocop-rails
+
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.7.6
+
+Naming/VariableName:
+  Enabled: false
+
+Naming/MethodName:
+  Enabled: false
+
+Rails:
+  Enabled: false
