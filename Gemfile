@@ -6,5 +6,5 @@ gem "rubocop-rails", require: false
 gem "rubocop-shopify", require: false
 gem "activeresource"
 
-# Specify your gem's dependencies in e_shipper.gemspec
+# Specify your gem's dependencies in eshipper.gemspec
 gemspec
