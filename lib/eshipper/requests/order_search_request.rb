@@ -21,7 +21,7 @@ module EShipper
       carrierTrackingNumber: nil, # [Optional]
       referenceValue: nil # [Optional]
     )
-      throw("Order date range should be within 3 month.") if toDate - 90 > fromDate
+      throw("Order date range should be within 3 month.") if fromDate + 90 > toDate
 
       @fromDate = fromDate
       @toDate = toDate
