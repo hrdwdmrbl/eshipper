@@ -23,9 +23,12 @@ module EShipper
       http_request.body = request_body
 
       http_session = Net::HTTP.new(uri.host, uri.port)
+
       http_session.use_ssl = true
+      http.ssl_version = :TLSv1
+
       http_session.read_timeout = 3000
-      http_session.set_debug_output($stdout)
+      # http_session.set_debug_output($stdout)
 
       http_response = http_session.start do |http|
         http.request(http_request)
