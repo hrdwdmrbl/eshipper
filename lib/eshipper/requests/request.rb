@@ -5,6 +5,9 @@ module EShipper
     end
 
     def build(&block)
+      throw "Missing EShipper::Client.instance.username" unless client.username
+      throw "Missing EShipper::Client.instance.password" unless client.password
+
       Nokogiri::XML::Builder.new do |xml|
         xml.EShipper(
           version: "3.1.0",
@@ -25,7 +28,7 @@ module EShipper
       http_session = Net::HTTP.new(uri.host, uri.port)
 
       http_session.use_ssl = true
-      http.ssl_version = :TLSv1
+      http_session.ssl_version = :TLSv1
 
       http_session.read_timeout = 3000
       # http_session.set_debug_output($stdout)
