@@ -15,7 +15,9 @@ module EShipper
     end
 
     def references
-      if self.References.Reference == "\n"
+      if !respond_to?(:References)
+        []
+      elsif self.References.Reference == "\n"
         []
       elsif self.References.Reference.is_a?(Array)
         self.References.Reference
@@ -25,7 +27,8 @@ module EShipper
     end
 
     def fetch
-      order_information_reply = OrderInformationReply.fetch(order_id: self.Id, referenceCode: references.first&.Code)
+      order_information_reply = OrderInformationReply.fetch(fetch_options)
+
       if order_information_reply.respond_to?(:OrderInformationReply)
         order_information_reply = order_information_reply.OrderInformationReply
         if order_information_reply.Order.is_a?(Array)
@@ -47,8 +50,12 @@ module EShipper
         order_information_reply
       else
         # TODO: error handling
-        nil
+        throw(order_information_reply)
       end
+    end
+
+    def fetch_options
+      { order_id: self.Id, referenceCode: references.first&.Code }
     end
   end
 end
