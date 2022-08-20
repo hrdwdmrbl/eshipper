@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
-class EShipperXMLFormatter
-  include ActiveResource::Formats::XmlFormat
-
-  def decode(xml)
-    ActiveResource::Formats::XmlFormat.decode(xml)
-  end
-end
-
 module EShipper
   class EShipperResponse < ::ActiveResource::Base
     self.site = EShipper::Client.instance.url
     self.format = :xml
+
+    def self.decode(xml)
+      # Remove raw & which are illegal
+      # https://stackoverflow.com/questions/17237334/illegal-character-in-raw-string-rexml-parsing
+      xml.gsub!(/&(?!(?:amp|lt|gt|quot|apos);)/, "&amp;")
+      format.decode(xml)
+    end
   end
 end
